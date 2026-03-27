@@ -1,0 +1,99 @@
+/Z001/N6aM3jN64d/SDlzWVdGNVVtRjVFa0E2OU03ODFlZklCOVp4ODJNOHA=/466901/affe780f7ea64c188804b48f92e89714/
+
+
+s_version:MCU单片机版本号
+ f_version：模块版本号（esp）
+OTA服务器： iot-api.heclouds.com:80
+
+
+/**************************************上传ota版本号*******************************************************/
+发送：
+
+POST /fuse-ota/N6aM3jN64d/Z001/version HTTP/1.1
+Content-Type: application/json
+Authorization:version=2018-10-31&res=userid%2F466901&et=1919945104&method=md5&sign=vKncOoXhEFpyy%2FDfPsC5gA%3D%3D
+host:iot-api.heclouds.com
+Content-Length:41
+
+{"s_version":"V1.0", "f_version": "V1.0"}\r\n
+
+
+接收：351
+
+HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2026 09:31:31 GMT
+Content-Type: application/json;charset=UTF-8
+Content-Length: 71
+Connection: keep-alive
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Origin: *
+Server: nginx
+Pragma: no-cache
+
+{"code":0,"msg":"succ","request_id":"436b84952a4943a184fdadefb3f0923b"}
+
+
+/**************************************查询有无ota任务*******************************************************/
+发送：241
+
+GET /fuse-ota/N6aM3jN64d/Z001/check?type=2&version=V1.0 HTTP/1.1
+Content-Type: application/json
+Authorization:version=2018-10-31&res=userid%2F466901&et=1919945104&method=md5&sign=vKncOoXhEFpyy%2FDfPsC5gA%3D%3D
+host:iot-api.heclouds.com
+
+1.无任务
+接收：324   关键词  "msg":"not exist"
+
+HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2026 10:44:14 GMT
+Content-Type: application/json;charset=UTF-8
+Content-Length: 80
+Connection: keep-alive
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Origin: *
+Server: nginx
+Pragma: no-cache
+
+{"code":12012,"msg":"not exist","request_id":"3615f1a13ed542d0b07f3b88a0b66630"}
+
+
+2有任务
+接收：428   关键词   "target":"V2.0","tid":1314871,"size":4160
+
+HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2026 10:52:15 GMT
+Content-Type: application/json;charset=UTF-8
+Content-Length: 183
+Connection: keep-alive
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Origin: *
+Server: nginx
+Pragma: no-cache
+
+{"code":0,"msg":"succ","data":{"target":"V2.0","tid":1314871,"size":4160,"md5":"a575634b720799103305be1f6af9d18e","status":1,"type":1},"request_id":"d631f6ef1a3f4ea1b81d8a7a84369f92"}
+
+/**************************************下载升级包*******************************************************/
+
+
+GET /fuse-ota/N6aM3jN64d/Z001/（tid）/download HTTP/1.1
+Authorization:version=2018-10-31&res=userid%2F466901&et=1919945104&method=md5&sign=vKncOoXhEFpyy%2FDfPsC5gA%3D%3D
+host:iot-api.heclouds.com
+Range:bytes=0-255
+
+
+接收：600多
+
+HTTP/1.1 206 Partial Content
+Date: Fri, 13 Mar 2026 11:01:20 GMT
+Content-Type: application/octet-stream;charset=UTF-8
+Content-Length: 256
+Connection: keep-alive
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Origin: *
+Content-Disposition: attachment; filename="%E6%B5%8B%E8%AF%95"
+Content-Range: bytes 0-255/4160
+Ota-Errno: 0
+Server: nginx                                            
+Pragma: no-cache
+
+p
